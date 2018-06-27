@@ -1,3 +1,3 @@
 # HjcOn 
 
-Start Tempalte from building simple lanfig pages
+Start Tempalte from building simple landing pages
