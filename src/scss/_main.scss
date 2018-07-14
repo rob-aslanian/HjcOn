@@ -2,6 +2,16 @@
 @import '_vars';
 @import '_mixins';
 
+/** Collapse **/
+.navbar-collapse{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.collapse{
+    flex-basis: 50%;
+}
+
 
 
 @import '_media';
