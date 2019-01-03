@@ -3,7 +3,7 @@ const path = require('path'),
       HtmlWebpackPlugin = require('html-webpack-plugin'), // Create html file in dist folder with same props which is in src folder 
       CleanWebpackPlugin= require('clean-webpack-plugin'), // Delete dist folder and after it create new dist folder with new files 
       CopyWebpackPlugin = require('copy-webpack-plugin'), // Copy files for one folder to another (used for fonts)
-      ImageminWebpackPlugin = require('imagemin-webpack-plugin').default // Minimize image 
+      //ImageminWebpackPlugin = require('imagemin-webpack-plugin').default // Minimize image ,
       OptimezeCssPlugin = require('optimize-css-assets-webpack-plugin'); // Minimize css 
 
 
@@ -41,10 +41,10 @@ const conf = {
              **/
             {
                 test: /\.scss$/,
-                use:  ETP.extract({
+                use:  ['css-hot-loader'].concat(ExtractTextPlugin.extract({
                   fallback: 'style-loader',
                   use: ['css-loader', 'postcss-loader' , 'sass-loader']
-                })
+                }))
             },
             // Image (use: file-loader , img-loader)
             {
@@ -82,13 +82,18 @@ const conf = {
         ],
     },
     devServer:{
-        contentBase:path.resolve(__dirname , 'src') // Enter point for webpack-dev-server 
+        contentBase:path.resolve(__dirname , 'src'),
+        port: 9000,
+        watchContentBase: true,
+        compress: true,
+        hot: true,
+        open: true // Enter point for webpack-dev-server 
     },
     plugins:[
         ETP,
         new HtmlWebpackPlugin({
-            filename:'index.html', // File which will be created  in dist folder 
-            template:'index.html', 
+            filename:'./index.html', // File which will be created  in dist folder 
+            template:'./index.html', 
             inject:false,
         }),
     ]
@@ -120,9 +125,9 @@ module.exports = (env , opt) => {
             ),
         )
         conf.plugins.push(
-            new ImageminWebpackPlugin({
-                test:/\.(png|gif|jpe?g)$/i,
-            }),
+            // new ImageminWebpackPlugin({
+            //     test:/\.(png|gif|jpe?g)$/i,
+            // }),
         )
  
         conf.plugins.push(
